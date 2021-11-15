@@ -10,7 +10,7 @@ public class ConnectionFactory {
 	//senha do mysql
 	private static final String PASSWORD = "admin";
 	//caminho do banco de dados
-	private static final String DATABASE_URL = "jdbc:mysql://localhost:3307/agenda";
+	private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/agenda";
 	//conexao com o mysql
 	public static Connection createConnectionToMySQL() throws Exception{
 		Class.forName("com.mysql.jdbc.Driver");
