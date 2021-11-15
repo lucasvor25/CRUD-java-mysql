@@ -12,7 +12,7 @@ import br.com.agenda.factory.ConnectionFactory;
 import br.com.agenda.model.Agenda;
 
 public class AgendaDAO {
-
+//Salvando a agenda
 	public void save(Agenda agenda) {
 	String sql = "INSERT INTO contatos(nome, idade, datacadastro) VALUES (?,?,?)";
 	
@@ -45,7 +45,7 @@ public class AgendaDAO {
 		}
 		}
 }
-	
+	//Atualizando a agenda
 	public void update(Agenda agenda) {
 		String sql = "UPDATE contatos SET nome = ?, idade = ?, dataCadastro = ?"+
 	"WHERE id = ?";
@@ -78,7 +78,35 @@ public class AgendaDAO {
 			}
 		}
 	}
-
+	//Metodo para apagar agendas pelo id
+	public void deletarPorId(int id) {
+		String sql = "DELETE FROM contatos WHERE id = ?";
+		
+		Connection conn = null;
+		
+		PreparedStatement pstm = null;
+		
+		try {
+			conn= ConnectionFactory.createConnectionToMySQL();
+			pstm = (PreparedStatement) conn.prepareStatement(sql);
+			pstm.setInt(1, id);
+			pstm.execute();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstm!=null) {
+					pstm.close();
+				}
+				if(conn!= null) {
+					conn.close();
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+//Metodo para buscar agendas no banco de dados
 	public List<Agenda> getAgendas(){
 		String sql = "SELECT * FROM contatos";
 		
