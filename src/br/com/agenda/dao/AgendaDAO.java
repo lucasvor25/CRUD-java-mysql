@@ -2,6 +2,9 @@ package br.com.agenda.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -42,4 +45,50 @@ public class AgendaDAO {
 		}
 		}
 }
-}
+
+	public List<Agenda> getAgendas(){
+		String sql = "SELECT * FROM contatos";
+		
+		List<Agenda> agendas = new ArrayList<Agenda>();
+		
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		//Recuperar dados do banco
+		ResultSet rset = null;
+		
+		try {
+			conn = ConnectionFactory.createConnectionToMySQL();
+		
+			pstm = (PreparedStatement) conn.prepareStatement(sql);
+			
+			rset = pstm.executeQuery();
+			
+			while (rset.next()) {
+				Agenda agenda = new Agenda();
+				agenda.setId(rset.getInt("id"));
+				agenda.setNome(rset.getString("nome"));
+				agenda.setIdade(rset.getInt("idade"));
+				agenda.setDataCadastro(rset.getDate("dataCadastro"));
+				agenda.add(agenda);
+			}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				try {
+				if(rset!=null){
+					rset.close();
+				}
+				if(pstm != null) {
+					pstm.close();
+				}
+				if(conn!=null) {
+					conn.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return agendas;	}
+			
+	}
+

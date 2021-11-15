@@ -32,4 +32,9 @@ public Date getDataCadastro() {
 public void setDataCadastro(Date dataCadastro) {
 	this.dataCadastro = dataCadastro;
 }
+public void add(Agenda agenda) {
+	// TODO Auto-generated method stub
+	
+}
+
 }
