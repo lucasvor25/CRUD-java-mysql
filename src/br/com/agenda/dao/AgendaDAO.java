@@ -45,6 +45,39 @@ public class AgendaDAO {
 		}
 		}
 }
+	
+	public void update(Agenda agenda) {
+		String sql = "UPDATE contatos SET nome = ?, idade = ?, dataCadastro = ?"+
+	"WHERE id = ?";
+		
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		
+		try {
+			conn = ConnectionFactory.createConnectionToMySQL();
+			
+			pstm = (PreparedStatement) conn.prepareStatement(sql);
+			pstm.setString(1, agenda.getNome());
+			pstm.setInt(2, agenda.getIdade());
+			pstm.setDate(3, new Date(agenda.getDataCadastro().getTime()));
+			pstm.setInt(4, agenda.getId());
+			
+			pstm.execute();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstm!=null) {
+					pstm.close();
+				}
+				if(conn!=null) {
+					conn.close();
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public List<Agenda> getAgendas(){
 		String sql = "SELECT * FROM contatos";
@@ -88,7 +121,8 @@ public class AgendaDAO {
 				e.printStackTrace();
 			}
 		}
-		return agendas;	}
+		return agendas;	
+		}
 			
 	}
 
